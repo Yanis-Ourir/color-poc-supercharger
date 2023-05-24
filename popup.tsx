@@ -7,7 +7,7 @@ function IndexPopup() {
 
   const [colorPrincipal, setColorPrincipal] = useState("");
   const [colorLink, setColorLink] = useState("");
-  const [colorHeader, setColorHeader] = useState("");  // => Mettre les couleurs par défauts de hubspot
+  const [colorHeader, setColorHeader] = useState("");  // => Mettre les couleurs par défauts de hubspot que je vais récupérer sur une variable
   const [colorHelp, setColorHelp] = useState("");
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function IndexPopup() {
     storage.set("colorLink", colorLink);
     storage.set("colorHeader", colorHeader);
     storage.set("colorHelp", colorHelp);
-    // Envoyez les couleurs au content.js via un message ou autre méthode
+    // Envoyez les couleurs au content.js via un message peut-être
   }
 
   return (
