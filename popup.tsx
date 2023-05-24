@@ -19,7 +19,7 @@ function IndexPopup() {
 
         setColorPrincipal(storedColorPrincipal || "");
         setColorLink(storedColorLink || "");
-        setColorHeader(storedColorHeader || "");
+        setColorHeader(storedColorHeader || ""); // => pareil ici pour les couleurs par défauts (stocker dans une variable)
         setColorHelp(storedColorHelp || "");
     } fetchData(); 
   }, []);
