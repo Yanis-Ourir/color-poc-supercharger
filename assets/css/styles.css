@@ -1,0 +1,21 @@
+* {
+    background-color: #003366;
+    color: white;
+    width: 500px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.color-div {
+    display: flex;
+}
+
+label {
+    font-size: 1rem;
+}
+
+input {
+    width: 100px;
+}
