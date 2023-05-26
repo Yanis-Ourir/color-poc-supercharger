@@ -9,7 +9,9 @@ h1 {
 }
 
 .color-div {
-    display: flex;
+   text-align: center;
+   margin: 5px;
+   
 }
 
 label {
@@ -18,4 +20,22 @@ label {
 
 input {
     width: 100px;
+}
+
+.div-color-button {
+    display: flex;
+    justify-content: center;
+}
+.color-button {
+    width: 20%;
+    border: 1px solid white;
+    border-radius: 5px;
+    height: 30px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.color-button:hover {
+    background-color: white;
+    color:#003366;
 }
