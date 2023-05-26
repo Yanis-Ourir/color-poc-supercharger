@@ -26,8 +26,7 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*",
-      "https://app.hubspot.com/reports-dashboard/5483623/view/2593188"
+      "https://*.hubspot.com/*"
     ],
     "permissions": [
       "activeTab",

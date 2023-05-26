@@ -26,9 +26,7 @@ function IndexPopup() {
   }, []);
 
 
-  console.log(colorHeader);
-  console.log(colorPrincipal);
-  console.log(colorLink);
+  
 
   function handleColorChange(event, setColor) {
     const newColor = event.target.value;
