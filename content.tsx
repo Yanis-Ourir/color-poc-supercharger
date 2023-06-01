@@ -8,7 +8,7 @@ export default function Content() {
   const [userHeaderColor, setUserHeaderColor] = useState("");
   const [userLinkColor, setUserLinkColor] = useState("");
   const styleElement = document.createElement('style');
-  const styleHeader = document.createElement('style');
+  const navbar = document.querySelector('nav');
 
 
 
@@ -55,31 +55,109 @@ export default function Content() {
   styleElement.innerHTML = `
   .private-button__link { color: ${userLinkColor}; } 
   .private-button__link:hover { color : ${linkHoverColor} }
-  .private-button--primary { background-color: ${userButtonColor}; border-color: ${userButtonColor}} 
-  .private-button--secondary { color: ${userButtonColor}; border-color: ${userButtonColor}}
+  .private-button--primary { background-color: ${userButtonColor}; border-color: ${userButtonColor} } 
+  .private-button--secondary { color: ${userButtonColor}; border-color: ${userButtonColor} }
 `;
   document.head.appendChild(styleElement);
 
+  function applyNewNavColor(element) {
+
+    const navColorToReplace = ['rgba(51, 71, 91,)', 'rgb(37, 51, 66)', 'rgb(46, 63, 80)'];
+
+    const navbarColor = window.getComputedStyle(element).backgroundColor;
+    if (navColorToReplace.includes(navbarColor)) {
+      element.style.backgroundColor = userHeaderColor;
+    }
+
+    // Parcours les éléments enfants
+    const childElements = element.querySelectorAll(':scope > *');
+    childElements.forEach(child => {
+      applyNewNavColor(child);
+
+      child.addEventListener('mouseover', function () {
+        event.stopPropagation()
+        child.style.backgroundColor = navHoverColor;
+      });
+
+      child.addEventListener('mouseout', function () {
+        child.style.backgroundColor = userHeaderColor;
+      });
+    });
+
+  }
+
   const interval = setInterval(function () {
-    if (document.querySelector("#hs-nav-v4--logo") === null) {
+    const navbar = document.querySelector('nav');
+
+    if (navbar === null) {
       return;
     }
     clearInterval(interval);
-
-    styleHeader.innerHTML = `
-.navbar-inner { background-color: ${userHeaderColor} }
-#hs-nav-v4 .navSearch-v2 .navSearch-inputWrapper .navSearch-input { background-color: ${userHeaderColor} }
-#hs-nav-v4 .mobile .nav-left  { background: ${userHeaderColor} }
-#hs-nav-v4 .primary-links>li.active>a, #hs-nav-v4 .primary-links>li.currentPage>a  { background-color: ${userHeaderColor} }
-#hs-nav-v4 .secondary-nav {background-color: ${userHeaderColor} }
-#hs-nav-v4 .expansion a.navSecondaryLink { background-color: ${userHeaderColor} }
-.nav-dropdown-separator { color: ${userHeaderColor} }
-
-`;
-    document.head.appendChild(styleHeader);
+    applyNewNavColor(navbar);
   }, 50)
 
+  function applyNewLinksColor(element) {
+    const linksColorToReplace = ['#0091ae', 'rgb(0, 145, 174)'];
 
+    const linkColor = window.getComputedStyle(element).color;
+    if (linksColorToReplace.includes(linkColor)) {
+      element.style.color = userLinkColor;
+    }
+
+  }
+
+  function applyNewLinksColorToSpans() {
+    const spans = document.querySelectorAll('span');
+    spans.forEach(span => {
+      applyNewLinksColor(span);
+    });
+  }
+
+  function applyNewLinksColorToI18nStrings() {
+    const i18nStrings = document.querySelectorAll('i18n-string');
+    i18nStrings.forEach(elem => {
+      applyNewLinksColor(elem);
+    });
+  }
+
+  function applyNewLinksColorToExistingLinks() {
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+      applyNewLinksColor(link);
+    });
+  }
+
+  function applyNewLinksColorToButton() {
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+      applyNewLinksColor(button);
+    })
+  }
+
+  function observeLinksMutation(mutationsList) {
+    mutationsList.forEach(mutation => {
+      if (mutation.type === 'childList') {
+        mutation.addedNodes.forEach(node => {
+          if (node.nodeName === 'A') {
+            applyNewLinksColor(node);
+          } else if (node.querySelectorAll) {
+            const newLinks = node.querySelectorAll('a');
+            newLinks.forEach(link => applyNewLinksColor(link));
+          }
+        });
+      }
+    });
+  }
+
+  // Appliquer la couleur aux éléments existants au démarrage
+  applyNewLinksColorToSpans();
+  applyNewLinksColorToI18nStrings();
+  applyNewLinksColorToExistingLinks();
+  applyNewLinksColorToButton();
+
+  // Observer les mutations pour appliquer la couleur aux nouveaux éléments ajoutés
+  const observer = new MutationObserver(observeLinksMutation);
+  observer.observe(document.body, { childList: true, subtree: true });
 
 
 }
